@@ -1,0 +1,61 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:todo_app/utilities/button.dart';
+
+class DialogBox extends StatelessWidget {
+  final controller;
+  VoidCallback onSave;
+  VoidCallback onCancel;
+
+  DialogBox(
+      {super.key,
+      required this.controller,
+      required this.onSave,
+      required this.onCancel});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.blueGrey,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      content: Container(
+        height: 150,
+        width: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextField(
+              controller: controller,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                hintText: 'Create New Task',
+                hintStyle: TextStyle(
+                    color: Colors.blueGrey[700], fontWeight: FontWeight.bold),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                MyButton(text: 'Save', onPressed: onSave),
+                SizedBox(
+                  width: 10,
+                ),
+                MyButton(text: 'Cancel', onPressed: onCancel)
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

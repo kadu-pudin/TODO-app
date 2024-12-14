@@ -21,7 +21,7 @@ class ToDoTile extends StatelessWidget {
       ),
       padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-          color: Colors.blueGrey, borderRadius: BorderRadius.circular(14)),
+          color: Colors.blueGrey, borderRadius: BorderRadius.circular(8)),
       child: Row(
         children: [
           Checkbox(

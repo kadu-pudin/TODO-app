@@ -11,8 +11,16 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-        theme: ThemeData());
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+      theme: ThemeData(
+        primaryColor: Colors.blueGrey,
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.black,
+          selectionHandleColor: Colors.black,
+          selectionColor: Color.fromARGB(100, 0, 0, 0),
+        ), // Or another color
+      ),
+    );
   }
 }
