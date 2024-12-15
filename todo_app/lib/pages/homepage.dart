@@ -71,14 +71,18 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         elevation: 0.0,
-        iconTheme: IconThemeData(size: 30),
+        iconTheme: IconThemeData(size: 30, color: Colors.blueGrey[900]),
+        actions: [
+          Icon(Icons.settings),
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.task_alt),
             Text(
               "TO DO by kadu",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.blueGrey[900], fontWeight: FontWeight.bold),
             ),
           ],
         ),

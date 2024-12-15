@@ -7,7 +7,7 @@ class ToDoTile extends StatelessWidget {
   final bool taskCompleted;
   final Function(bool?)? onChanged;
   final Function(BuildContext)? deleteFunction;
-  ToDoDatabase db = ToDoDatabase();
+  final ToDoDatabase db = ToDoDatabase();
 
   ToDoTile(
       {super.key,
@@ -24,10 +24,19 @@ class ToDoTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: Slidable(
           endActionPane: ActionPane(motion: StretchMotion(), children: [
-            SlidableAction(
+            CustomSlidableAction(
               onPressed: deleteFunction,
-              icon: Icons.delete,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.delete,
+                      size: 20,
+                      color: Colors.black54,
+                    ),
+                  ]),
               backgroundColor: Colors.redAccent,
+              foregroundColor: Colors.black,
             )
           ]),
           child: Container(
@@ -38,8 +47,9 @@ class ToDoTile extends StatelessWidget {
                 Checkbox(
                   value: taskCompleted,
                   onChanged: onChanged,
-                  activeColor: Colors.blueGrey[900],
+                  activeColor: Colors.blueGrey.shade900,
                   checkColor: Colors.blueGrey,
+                  side: BorderSide(color: Colors.blueGrey.shade900, width: 1.5),
                 ),
                 Text(
                   taskName,

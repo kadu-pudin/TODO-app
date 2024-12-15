@@ -32,6 +32,8 @@ class DialogBox extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.black),
                 ),
+                prefixIcon: Icon(Icons.draw),
+                prefixIconColor: Colors.black,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.black),
