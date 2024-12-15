@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/data/database.dart';
 import 'package:todo_app/utilities/dialog_box.dart';
 import 'package:todo_app/utilities/todo_tile.dart';
 
@@ -10,24 +12,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = TextEditingController();
+  final _myBox = Hive.box('mybox');
+  ToDoDatabase db = ToDoDatabase();
 
-  List toDoList = [
-    ["Play video games al'night", false],
-    ["Buy cola-cola YEEE", true]
-  ];
+  @override
+  void initState() {
+    if (_myBox.get('TODOLIST') == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
+  final _controller = TextEditingController();
 
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      toDoList[index][1] = !toDoList[index][1];
+      db.toDoList[index][1] = !db.toDoList[index][1];
     });
+    db.updateDatabase();
   }
 
   void SaveNewTask() {
     setState(() {
-      toDoList.add([_controller.text, false]);
+      db.toDoList.add([_controller.text, false]);
+      _controller.clear();
     });
     Navigator.of(context).pop();
+    db.updateDatabase();
   }
 
   void createNewTask() {
@@ -37,10 +50,18 @@ class _HomePageState extends State<HomePage> {
         return DialogBox(
           controller: _controller,
           onSave: SaveNewTask,
-          onCancel: () => Navigator.of(context).pop(),
+          onCancel: () => {Navigator.of(context).pop(), _controller.clear()},
         );
       },
     );
+    db.updateDatabase();
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      db.toDoList.removeAt(index);
+    });
+    db.updateDatabase();
   }
 
   @override
@@ -50,10 +71,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         elevation: 0.0,
-        centerTitle: true,
-        title: Text(
-          "TO DO",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        iconTheme: IconThemeData(size: 30),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.task_alt),
+            Text(
+              "TO DO by kadu",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -65,14 +92,29 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blueGrey,
         elevation: 0.0,
       ),
-      body: ListView.builder(
-        itemCount: toDoList.length,
-        itemBuilder: (context, index) {
-          return ToDoTile(
-              taskName: toDoList[index][0],
-              taskCompleted: toDoList[index][1],
-              onChanged: (value) => checkBoxChanged(value, index));
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              'OBS: Arraste para o lado esquerdo para deletar',
+              style: TextStyle(
+                  color: Colors.blueGrey, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: db.toDoList.length,
+            itemBuilder: (context, index) {
+              return ToDoTile(
+                  taskName: db.toDoList[index][0],
+                  taskCompleted: db.toDoList[index][1],
+                  onChanged: (value) => checkBoxChanged(value, index),
+                  deleteFunction: (context) => deleteTask(index));
+            },
+          ),
+        ],
       ),
     );
   }

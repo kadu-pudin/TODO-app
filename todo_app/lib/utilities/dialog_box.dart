@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:todo_app/utilities/button.dart';
 
 class DialogBox extends StatelessWidget {
   final controller;
-  VoidCallback onSave;
-  VoidCallback onCancel;
+  final VoidCallback onSave;
+  final VoidCallback onCancel;
 
   DialogBox(
       {super.key,
@@ -46,11 +44,11 @@ class DialogBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                MyButton(text: 'Save', onPressed: onSave),
+                MyButton(text: 'Cancelar', onPressed: onCancel),
                 SizedBox(
                   width: 10,
                 ),
-                MyButton(text: 'Cancel', onPressed: onCancel)
+                MyButton(text: 'Salvar', onPressed: onSave)
               ],
             )
           ],
