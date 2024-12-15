@@ -36,8 +36,10 @@ class _HomePageState extends State<HomePage> {
 
   void SaveNewTask() {
     setState(() {
-      db.toDoList.add([_controller.text, false]);
-      _controller.clear();
+      if (_controller.text != '') {
+        db.toDoList.add([_controller.text, false]);
+        _controller.clear();
+      }
     });
     Navigator.of(context).pop();
     db.updateDatabase();
@@ -72,9 +74,6 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blueGrey,
         elevation: 0.0,
         iconTheme: IconThemeData(size: 30, color: Colors.blueGrey[900]),
-        actions: [
-          Icon(Icons.settings),
-        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

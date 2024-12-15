@@ -26,17 +26,17 @@ class DialogBox extends StatelessWidget {
           children: [
             TextField(
               controller: controller,
-              cursorColor: Colors.black,
+              cursorColor: Colors.blueGrey.shade900,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.black),
+                  borderSide: BorderSide(color: Colors.blueGrey.shade900),
                 ),
                 prefixIcon: Icon(Icons.draw),
-                prefixIconColor: Colors.black,
+                prefixIconColor: Colors.blueGrey.shade900,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.black),
+                  borderSide: BorderSide(color: Colors.blueGrey.shade900),
                 ),
                 hintText: 'Create New Task',
                 hintStyle: TextStyle(
